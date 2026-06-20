@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Player {
+  walletAddress String   @id @map("wallet_address") @db.VarChar(42)
+  ironOre       Decimal  @default(0.0000) @map("iron_ore") @db.Decimal(18, 4)
+  platinum      Decimal  @default(0.0000) @map("platinum") @db.Decimal(18, 4)
+  fuel          Int      @default(100)
+  nonce         Int      @default(0)
+  createdAt     DateTime @default(now()) @map("created_at")
+  ships         Ship[]
+
+  @@map("players")
+}
+
+model Ship {
+  id                  Int       @id @default(autoincrement())
+  playerWallet        String    @map("player_wallet") @db.VarChar(42)
+  shipName            String    @map("ship_name") @db.VarChar(50)
+  miningRatePerSecond Decimal   @map("mining_rate_per_second") @db.Decimal(10, 4)
+  maxCargo            Decimal   @map("max_cargo") @db.Decimal(10, 4)
+  status              String    @default("IDLE") @db.VarChar(20)
+  lastLaunchTime      DateTime? @map("last_launch_time")
+  createdAt           DateTime  @default(now()) @map("created_at")
+
+  player Player @relation(fields: [playerWallet], references: [walletAddress], onDelete: Cascade)
+
+  @@map("ships")
+}
