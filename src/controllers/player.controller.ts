@@ -58,4 +58,44 @@ export class PlayerController {
       );
     }
   }
+
+  /**
+   * Handles HTTP GET request to fetch player profile and live hangar status
+   */
+  async getProfile(c: Context) {
+    try {
+      // Extract walletAddress from the URL path parameter
+      const walletAddress = c.req.param("walletAddress");
+
+      if (!walletAddress) {
+        return c.json(
+          {
+            success: false,
+            error: "Wallet address parameter is required.",
+          },
+          400,
+        );
+      }
+
+      const profileData = await playerService.getPlayerProfile(walletAddress);
+
+      return c.json(
+        {
+          success: true,
+          data: profileData,
+        },
+        200,
+      );
+    } catch (error: any) {
+      return c.json(
+        {
+          success: false,
+          error:
+            error.message ||
+            "Internal server error occurred while fetching profile.",
+        },
+        400,
+      );
+    }
+  }
 }

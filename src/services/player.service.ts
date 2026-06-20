@@ -44,4 +44,67 @@ export class PlayerService {
       };
     });
   }
+
+  /**
+   * Fetches the complete player profile, hangar data, and calculates real-time pending resources
+   */
+  async getPlayerProfile(walletAddress: string) {
+    // Fetch player along with all their spaceships
+    const player = await prisma.player.findUnique({
+      where: { walletAddress },
+      include: { ships: true },
+    });
+
+    if (!player) {
+      throw new Error("Player profile not found!");
+    }
+
+    // Map through ships to inject real-time dynamic pending resources
+    const updatedShips = player.ships.map((ship) => {
+      let pendingIronOre = 0;
+      let elapsedSeconds = 0;
+
+      if (ship.status === "MINING" && ship.lastLaunchTime) {
+        const currentTime = new Date().getTime();
+        const launchTime = new Date(ship.lastLaunchTime).getTime();
+
+        // Calculate exact seconds elapsed since launch
+        elapsedSeconds = Math.floor((currentTime - launchTime) / 1000);
+
+        if (elapsedSeconds > 0) {
+          const miningRate = Number(ship.miningRatePerSecond);
+          const maxCargo = Number(ship.maxCargo);
+
+          pendingIronOre = elapsedSeconds * miningRate;
+
+          // Cap with max cargo hold capacity
+          if (pendingIronOre > maxCargo) {
+            pendingIronOre = maxCargo;
+          }
+        }
+      }
+
+      // Return the ship object bundled with live telemetry data
+      return {
+        ...ship,
+        telemetry: {
+          elapsedSeconds,
+          pendingIronOre: pendingIronOre.toFixed(4),
+        },
+      };
+    });
+
+    // Return consolidated dashboard data
+    return {
+      walletAddress: player.walletAddress,
+      balances: {
+        ironOre: player.ironOre,
+        platinum: player.platinum,
+        fuel: player.fuel,
+      },
+      nonce: player.nonce,
+      createdAt: player.createdAt,
+      hangar: updatedShips,
+    };
+  }
 }
