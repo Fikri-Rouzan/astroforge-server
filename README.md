@@ -6,12 +6,12 @@
 
 ## 🛠️ Tech Stack
 
-| Category                    | Technologies Used            |
-| :-------------------------- | :--------------------------- |
-| 🌐 **Programming Language** | `TypeScript`                 |
-| 🧩 **Framework**            | `Hono`                       |
-| ⚛️ **Libraries**            | `dotenv`, `ethers`, `Prisma` |
-| 🗄️ **Database**             | `Neon (PostgreSQL)`          |
+| Category                    | Technologies Used                             |
+| :-------------------------- | :-------------------------------------------- |
+| 🌐 **Programming Language** | `TypeScript`                                  |
+| 🧩 **Framework**            | `Hono`                                        |
+| ⚛️ **Libraries**            | `dotenv`, `ethers`, `Prisma`, `node-postgres` |
+| 🗄️ **Database**             | `Neon (PostgreSQL)`                           |
 
 ---
 

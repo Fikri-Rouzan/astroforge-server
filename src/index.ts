@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { env } from "./config/env.config.js";
 import { miningRouter } from "./routes/mining.routes.js";
+import { playerRouter } from "./routes/player.routes.js";
 
 const app = new Hono();
 
@@ -18,8 +19,9 @@ app.use(
 // Base health check route
 app.get("/", (c) => c.text("AstroForge Server is Operational!"));
 
-// Mount the modular mining routes
+// Mount modular routes
 app.route("/api/mining", miningRouter);
+app.route("/api/player", playerRouter);
 
 console.log(`[AstroForge] Server is running on http://localhost:${env.port}`);
 
