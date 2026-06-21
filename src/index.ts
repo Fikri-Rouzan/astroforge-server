@@ -5,6 +5,7 @@ import { env } from "./config/env.config.js";
 import { miningRouter } from "./routes/mining.routes.js";
 import { playerRouter } from "./routes/player.routes.js";
 import { spaceportRouter } from "./routes/spaceport.routes.js";
+import { web3Router } from "./routes/web3.routes.js";
 
 const app = new Hono();
 
@@ -24,6 +25,7 @@ app.get("/", (c) => c.text("AstroForge Server is Operational!"));
 app.route("/api/mining", miningRouter);
 app.route("/api/player", playerRouter);
 app.route("/api/spaceport", spaceportRouter);
+app.route("/api/web3", web3Router);
 
 console.log(`[AstroForge] Server is running on http://localhost:${env.port}`);
 

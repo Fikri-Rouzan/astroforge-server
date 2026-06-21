@@ -8,4 +8,8 @@ export const gameConfig = {
     miningRateIncrement: 0.05,
     maxCargoIncrement: 100,
   },
+  web3: {
+    conversionRate: 100,
+    voucherExpiryDuration: 600,
+  },
 };
