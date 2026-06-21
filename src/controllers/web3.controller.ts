@@ -10,13 +10,16 @@ export class Web3Controller {
   async requestWithdrawal(c: Context) {
     try {
       const body = await c.req.json();
-      const { walletAddress, ironOreAmount } = body;
+      const { ironOreAmount } = body;
 
-      if (!walletAddress || !ironOreAmount) {
+      // Securely extract the verified wallet address from the auth middleware context
+      const walletAddress = c.get("walletAddress");
+
+      if (!ironOreAmount) {
         return c.json(
           {
             success: false,
-            error: "walletAddress and ironOreAmount parameters are required.",
+            error: "ironOreAmount parameter is required.",
           },
           400,
         );

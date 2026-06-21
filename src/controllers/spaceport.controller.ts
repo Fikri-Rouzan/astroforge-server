@@ -10,13 +10,16 @@ export class SpaceportController {
   async refuel(c: Context) {
     try {
       const body = await c.req.json();
-      const { walletAddress, fuelAmount } = body;
+      const { fuelAmount } = body;
 
-      if (!walletAddress || !fuelAmount) {
+      // Securely extract the verified wallet address from the auth middleware context
+      const walletAddress = c.get("walletAddress");
+
+      if (!fuelAmount) {
         return c.json(
           {
             success: false,
-            error: "walletAddress and fuelAmount parameters are required.",
+            error: "fuelAmount parameter is required.",
           },
           400,
         );
@@ -56,13 +59,16 @@ export class SpaceportController {
   async upgradeShip(c: Context) {
     try {
       const body = await c.req.json();
-      const { walletAddress, shipId } = body;
+      const { shipId } = body;
 
-      if (!walletAddress || !shipId) {
+      // Securely extract the verified wallet address from the auth middleware context
+      const walletAddress = c.get("walletAddress");
+
+      if (!shipId) {
         return c.json(
           {
             success: false,
-            error: "walletAddress and shipId parameters are required.",
+            error: "shipId parameter is required.",
           },
           400,
         );

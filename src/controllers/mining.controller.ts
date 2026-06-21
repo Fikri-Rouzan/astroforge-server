@@ -10,15 +10,17 @@ export class MiningController {
   async launchShip(c: Context) {
     try {
       const body = await c.req.json();
-      const { walletAddress, shipId } = body;
+      const { shipId } = body;
+
+      // Securely extract the verified wallet address from the auth middleware context
+      const walletAddress = c.get("walletAddress");
 
       // Validate required inputs
-      if (!walletAddress || !shipId) {
+      if (!shipId) {
         return c.json(
           {
             success: false,
-            error:
-              "Missing required parameters: walletAddress and shipId are required.",
+            error: "Missing required parameter: shipId is required.",
           },
           400,
         );
@@ -56,15 +58,17 @@ export class MiningController {
   async claimMining(c: Context) {
     try {
       const body = await c.req.json();
-      const { walletAddress, shipId } = body;
+      const { shipId } = body;
+
+      // Securely extract the verified wallet address from the auth middleware context
+      const walletAddress = c.get("walletAddress");
 
       // Validate required inputs
-      if (!walletAddress || !shipId) {
+      if (!shipId) {
         return c.json(
           {
             success: false,
-            error:
-              "Missing required parameters: walletAddress and shipId are required.",
+            error: "Missing required parameter: shipId is required.",
           },
           400,
         );
