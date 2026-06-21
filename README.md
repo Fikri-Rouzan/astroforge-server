@@ -2,6 +2,8 @@
 
 ## 📌 Description
 
+The core backend engine for AstroForge, a Web3 space-mining game. It manages the primary gameplay loops, secure player authentication, account progression, and spaceport logistics. The architecture processes resource gathering mechanics and incorporates dedicated services to verify in-game actions against decentralized data layers for Web3 transactions.
+
 ---
 
 ## 🛠️ Tech Stack
