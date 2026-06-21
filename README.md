@@ -84,3 +84,15 @@ npm run dev
 # Using pnpm
 pnpm run dev
 ```
+
+---
+
+## 🧪 Running Tests
+
+```bash
+# Using npm
+npx tsx scripts/test-auth.ts
+
+# Using pnpm
+pnpm tsx scripts/test-auth.ts
+```
