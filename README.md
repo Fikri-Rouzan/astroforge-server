@@ -53,9 +53,9 @@ cp .env.example .env
   ```env
   PORT=3000
   DATABASE_URL=
-  SERVER_ADMIN_PRIVATE_KEY=
-  TOKEN_CONTRACT_ADDRESS=
   JWT_SECRET=
+  TOKEN_CONTRACT_ADDRESS=
+  SERVER_ADMIN_PRIVATE_KEY=
   ```
 
 5. **Generate Database Client**
