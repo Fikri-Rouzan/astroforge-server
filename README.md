@@ -53,6 +53,7 @@ cp .env.example .env
   DATABASE_URL=
   SERVER_ADMIN_PRIVATE_KEY=
   TOKEN_CONTRACT_ADDRESS=
+  JWT_SECRET=
   ```
 
 5. **Generate Database Client**
