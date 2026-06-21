@@ -7,4 +7,5 @@ export const env = {
   databaseUrl: process.env.DATABASE_URL,
   adminPrivateKey: process.env.SERVER_ADMIN_PRIVATE_KEY,
   tokenContractAddress: process.env.TOKEN_CONTRACT_ADDRESS,
+  jwtSecret: process.env.JWT_SECRET,
 };
