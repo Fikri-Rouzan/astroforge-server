@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 
 const BACKEND_URL = "http://localhost:3000/api";
-// A random dummy private key to simulate a player's MetaMask wallet locally
+// A random dummy private key to simulate a player's Web3 wallet locally
 const PLAYER_PRIVATE_KEY =
   "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
 const playerWallet = new ethers.Wallet(PLAYER_PRIVATE_KEY);
@@ -23,7 +23,7 @@ async function runAuthenticationTest() {
     const { message, challengeToken } = challengeData.data;
     console.log("[Test] Challenge message received successfully.");
 
-    // Simulate player signing the message via MetaMask cryptographically
+    // Simulate player signing the message via their Web3 wallet cryptographically
     console.log("[Test] Signing message cryptographically...");
     const signature = await playerWallet.signMessage(message);
 
