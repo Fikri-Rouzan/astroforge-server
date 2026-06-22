@@ -50,4 +50,47 @@ export class Web3Controller {
       );
     }
   }
+
+  /**
+   * Handles HTTP POST request to rollback a pending withdrawal voucher
+   */
+  async cancelWithdrawal(c: Context) {
+    try {
+      const body = await c.req.json();
+      const { ironOreAmount } = body;
+      const walletAddress = c.get("walletAddress");
+
+      if (!ironOreAmount) {
+        return c.json(
+          {
+            success: false,
+            error: "ironOreAmount parameter is required for rollback.",
+          },
+          400,
+        );
+      }
+
+      await web3Service.rollbackWithdrawVoucher(
+        walletAddress,
+        Number(ironOreAmount),
+      );
+
+      return c.json(
+        {
+          success: true,
+          message:
+            "Refinery rollback complete. Assets safely restored to cargo hold.",
+        },
+        200,
+      );
+    } catch (error: any) {
+      return c.json(
+        {
+          success: false,
+          error: error.message || "Rollback execution failed.",
+        },
+        500,
+      );
+    }
+  }
 }

@@ -99,4 +99,32 @@ export class Web3Service {
       throw new Error("Failed to generate secure cryptographic signature.");
     }
   }
+
+  /**
+   * Automatically restores player assets and decrements nonce if a Web3 transaction is rejected
+   */
+  async rollbackWithdrawVoucher(
+    walletAddress: string,
+    ironOreAmountToRefund: number,
+  ) {
+    const player = await prisma.player.findUnique({
+      where: { walletAddress },
+    });
+
+    if (!player) throw new Error("Player profile not found.");
+
+    // Prevent nonce from dropping below zero
+    if (player.nonce === 0) return;
+
+    // Execute atomic transaction to restore resources
+    return await prisma.$transaction(async (tx) => {
+      return await tx.player.update({
+        where: { walletAddress },
+        data: {
+          ironOre: { increment: ironOreAmountToRefund },
+          nonce: { decrement: 1 },
+        },
+      });
+    });
+  }
 }
